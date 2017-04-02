@@ -1,0 +1,13 @@
+<launch>
+  <node name="dynamixel_tilt" pkg="dynamixel_tilt" type="dynamixel_tilt" required="true" output="screen">
+    <rosparam>
+      device_name: "/dev/ttyUSB0"
+      baud_rate: 1000000
+      motor_model: "XM430_W350_R"
+      motor_id: 2
+      protocol_version: 2.0
+      profile_velocity: 3
+      profile_acceleration: 10
+    </rosparam>
+  </node>
+</launch>
