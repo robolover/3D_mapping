@@ -22,13 +22,13 @@ double convertValue2Radian(int32_t value);
 
    convertValue2Radian(pub->motor_present_position);
 
-   transform.setOrigin( tf::Vector3(0, 0, 0.08) );
+   transform.setOrigin( tf::Vector3(0, 0, 0.16) );
    q.setRPY(0, convertValue2Radian(pub->motor_present_position), 0);
    transform.setRotation(q);
 
    br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "dynamixel_angle"));
 
-   transform.setOrigin( tf::Vector3(0, 0, 0.11) );
+   transform.setOrigin( tf::Vector3(0, 0, 0.23) );
    q.setRPY(0, convertValue2Radian(pub->motor_present_position), 0);
    transform.setRotation(q);
 

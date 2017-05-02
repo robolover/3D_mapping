@@ -44,8 +44,8 @@ DynamixelWorkbenchPositionControl::DynamixelWorkbenchPositionControl()
      protocol_version_(0.0),
      profile_velocity_(0),
      profile_acceleration_(0),
-     start_angle_(1600),
-     end_angle_(1600),
+     start_angle_(1080),
+     end_angle_(1080),
      index_(0)
 
 {
@@ -366,11 +366,11 @@ bool DynamixelWorkbenchPositionControl::dynamixelControlLoop(void)
 
     pub.motor_present_position = abs(read_data_["present_position"]->at(0));
 
-      if(abs(read_data_["present_position"]->at(0))<1620)
+      if(abs(read_data_["present_position"]->at(0) - start_angle_) < 20)
     {
       laser_pub.msg = 1;
     }
-      else if(abs(read_data_["present_position"]->at(0))>2600)
+      else if(abs(read_data_["present_position"]->at(0) - end_angle_) < 20)
     {
         laser_pub.msg = 2;
     }
@@ -385,23 +385,22 @@ bool DynamixelWorkbenchPositionControl::dynamixelControlLoop(void)
 
     writePosition(0, end_angle_);
 
-  // if (index_ == 0)
-  // {
-  //   if (abs(read_data_["present_position"]->at(0) - start_angle_) < 30)
-  //   {
-  //     index_ = 1;
-  //   }
-  //writePosition(0, start_angle_);
-  // }
-  // else if (index_ == 1)
-  // {
-  //   if (abs(read_data_["present_position"]->at(0) - end_angle_) < 30)
-  //   {
-  //     index_ = 0;
-  //   }
-  //     writePosition(0, end_angle_);
-  // }
-//  ROS_ERROR("%u", index_);
+  if (index_ == 0)
+  {
+    if (abs(read_data_["present_position"]->at(0) - start_angle_) < 20)
+    {
+      index_ = 1;
+    }
+  writePosition(0, start_angle_);
+  }
+  else if (index_ == 1)
+  {
+    if (abs(read_data_["present_position"]->at(0) - end_angle_) < 20)
+    {
+      index_ = 0;
+    }
+      writePosition(0, end_angle_);
+  }
 }
 
 bool DynamixelWorkbenchPositionControl::controlPanTiltMotorCallback(dynamixel_workbench_msgs::SetPosition::Request &req,
@@ -416,6 +415,7 @@ int main(int argc, char **argv)
   // Init ROS node
   ros::init(argc, argv, "dynamixel_workbench_position_control");
   DynamixelWorkbenchPositionControl dynamixel_pos_ctrl;
+
 
   while (ros::ok())
   {

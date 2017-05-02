@@ -1,0 +1,8 @@
+scan_filter_chain:
+- name: shadows
+  type: ScanShadowsFilter
+  params:
+    min_angle: 5
+    max_angle: 175
+    neighbors: 5
+    window: 1

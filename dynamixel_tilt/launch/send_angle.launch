@@ -1,8 +1,8 @@
 <launch>
   <node name="send_angle" pkg="dynamixel_tilt" type="send_angle" required="true" output="screen">
     <rosparam>
-      start_angle: 1600
-      end_angle: 2600
+      start_angle: 1080
+      end_angle: 3070
     </rosparam>
   </node>
 </launch>
